@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => 'api', // CHANGÉ: de 'web' à 'api' pour utiliser JWT par défaut
+        'passwords' => 'users',
     ],
 
     /*
@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // AJOUTÉ: Guard API pour JWT
+        'api' => [
+            'driver' => 'jwt', // IMPORTANT: 'jwt' et non 'session' ou 'token'
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -62,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => App\Models\User::class, // CHANGÉ: directement la classe au lieu de env()
         ],
 
         // 'users' => [
