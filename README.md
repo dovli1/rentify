@@ -1,22 +1,22 @@
 # 🏠 Rentify - SaaS de gestion de colocation
 
-## 📝 Description
+##  Description
 Application SaaS destinée aux propriétaires pour gérer leurs propriétés en colocation.
 
-## 👥 Équipe
-- **Backend (Laravel)** : [Votre nom]
-- **Frontend (React/Vue/Angular)** : [Nom de votre ami]
-
+## Équipe
+- **Backend (Laravel)** : dalal
+- **Frontend (React):dina
+- ** test : amina
 ## 🛠️ Technologies
 
 ### Backend
 - Laravel 10+
-- MySQL/PostgreSQL
+- MySQL
 - JWT Authentication
 - API REST
 
 ### Frontend
-- React/Vue/Angular (à définir)
+- React
 - Axios
 - TailwindCSS
 
@@ -29,7 +29,7 @@ rentify/
 └── README.md
 ```
 
-## 🚀 Installation
+##  Installation
 
 ### Backend (Laravel)
 ```bash
@@ -48,7 +48,7 @@ npm install
 npm run dev
 ```
 
-## 📋 Fonctionnalités
+## Fonctionnalités
 
 ### Module Authentification
 - ✅ Inscription
@@ -64,11 +64,9 @@ npm run dev
 - ✅ Supprimer une propriété
 - ✅ Upload de photos
 
-## 🌿 Branches Git
+##  Branches Git
 - `main` : Production
 - `develop` : Développement
 - `feature/auth-backend` : Module authentification (backend)
 - `feature/properties-backend` : Module propriétés (backend)
 
-## 📞 Contact
-Projet réalisé dans le cadre du stage de fin d'études.
