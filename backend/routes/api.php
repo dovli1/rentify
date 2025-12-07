@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PropertyController;
 
 // Routes publiques (sans authentification)
 Route::prefix('auth')->group(function () {
@@ -17,4 +18,5 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/profile', [AuthController::class, 'profile']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
     });
+    Route::apiResource('properties', PropertyController::class);
 });
