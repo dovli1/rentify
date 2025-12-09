@@ -16,38 +16,53 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login({ email, password });
-      toast.success('Connexion réussie !');
-      navigate('/dashboard');
+      const data = await login({ email, password });
+      const userRole = data.user.role;
+
+      toast.success(`Bienvenue ${data.user.name} ! 👋`);
+
+      // Redirection automatique selon le rôle
+      switch (userRole) {
+        case 'proprietaire':
+          navigate('/proprietaire/dashboard');
+          break;
+        case 'locataire':
+          navigate('/locataire/dashboard');
+          break;
+        case 'admin':
+          navigate('/admin/dashboard');
+          break;
+        default:
+          navigate('/');
+      }
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Email ou mot de passe incorrect');
+      toast.error('Email ou mot de passe incorrect');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-blue-50 flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-lg shadow-md p-8">
+        <div className="bg-white rounded-xl shadow-2xl p-8">
+          {/* Header */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-full mb-4">
-              <LogIn className="h-8 w-8 text-primary-600" />
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-rose-500 to-pink-600 rounded-full mb-4">
+              <LogIn className="h-8 w-8 text-white" />
             </div>
-            <h2 className="text-3xl font-extrabold text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">
               Connexion
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
-              Ou{' '}
-              <Link to="/register" className="font-medium text-primary-600 hover:text-primary-500">
-                créez un nouveau compte
-              </Link>
+            <p className="text-gray-600">
+              Accédez à votre espace personnel
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email
               </label>
               <div className="relative">
@@ -55,19 +70,19 @@ const Login = () => {
                   <Mail className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                   placeholder="votre@email.com"
                   required
                 />
               </div>
             </div>
 
+            {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Mot de passe
               </label>
               <div className="relative">
@@ -75,25 +90,56 @@ const Login = () => {
                   <Lock className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                   placeholder="••••••••"
                   required
                 />
               </div>
             </div>
 
+            {/* Mot de passe oublié */}
+            <div className="flex items-center justify-end">
+              <Link to="#" className="text-sm text-rose-600 hover:text-rose-700">
+                Mot de passe oublié ?
+              </Link>
+            </div>
+
+            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-gradient-to-r from-rose-500 to-pink-600 text-white py-3 rounded-lg font-semibold hover:from-rose-600 hover:to-pink-700 disabled:opacity-50 transition-all"
             >
               {loading ? 'Connexion...' : 'Se connecter'}
             </button>
           </form>
+
+          {/* Footer */}
+          <div className="mt-8 text-center space-y-4">
+            <p className="text-sm text-gray-600">
+              Pas encore de compte ?
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                to="/register/proprietaire"
+                className="flex-1 bg-rose-100 text-rose-700 py-2 rounded-lg font-medium hover:bg-rose-200 transition-colors"
+              >
+                Propriétaire
+              </Link>
+              <Link
+                to="/register/locataire"
+                className="flex-1 bg-blue-100 text-blue-700 py-2 rounded-lg font-medium hover:bg-blue-200 transition-colors"
+              >
+                Locataire
+              </Link>
+            </div>
+            <Link to="/" className="block text-sm text-gray-500 hover:text-gray-700">
+              ← Retour à l'accueil
+            </Link>
+          </div>
         </div>
       </div>
     </div>
