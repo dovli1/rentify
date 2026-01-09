@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PropertyController;
+use App\Http\Controllers\Api\PaymentController;
 
 // Routes publiques (sans authentification)
 Route::prefix('auth')->group(function () {
@@ -19,4 +20,7 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/refresh', [AuthController::class, 'refresh']);
     });
     Route::apiResource('properties', PropertyController::class);
+    Route::apiResource('payments', PaymentController::class);
+    Route::post('payments/{id}/mark-paid', [PaymentController::class, 'markAsPaid']);
+    Route::get('payments-stats', [PaymentController::class, 'stats']);
 });
