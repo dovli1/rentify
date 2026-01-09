@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Lien avec users (compte locataire)
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade'); // Lien avec users (compte locataire)
             $table->foreignId('property_id')->nullable()->constrained()->onDelete('set null'); // Propriété louée
             $table->string('first_name');
             $table->string('last_name');
