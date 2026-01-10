@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\ReportController;
 
 
 // Routes publiques (sans authentification)
@@ -29,5 +30,10 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('payments', PaymentController::class);
     Route::post('payments/{id}/mark-paid', [PaymentController::class, 'markAsPaid']);
     Route::get('payments-stats', [PaymentController::class, 'stats']);
+    Route::get('dashboard', [ReportController::class, 'dashboard']);
+    Route::get('reports/properties', [ReportController::class, 'propertiesReport']);
+    Route::get('reports/late-payments', [ReportController::class, 'latePaymentsReport']);
+    Route::get('reports/expiring-contracts', [ReportController::class, 'expiringContractsReport']);
+    Route::get('reports/financial', [ReportController::class, 'financialReport']);
     
 });
