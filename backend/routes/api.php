@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\NotificationController;
 
 
 // Routes publiques (sans authentification)
@@ -35,5 +36,12 @@ Route::middleware('auth:api')->group(function () {
     Route::get('reports/late-payments', [ReportController::class, 'latePaymentsReport']);
     Route::get('reports/expiring-contracts', [ReportController::class, 'expiringContractsReport']);
     Route::get('reports/financial', [ReportController::class, 'financialReport']);
+    // Notifications
+    Route::get('notifications', [NotificationController::class, 'index']);
+    Route::get('notifications/unread-count', [NotificationController::class, 'unreadCount']);
+    Route::post('notifications', [NotificationController::class, 'store']);
+    Route::post('notifications/{id}/mark-read', [NotificationController::class, 'markAsRead']);
+    Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
+    Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
     
 });
