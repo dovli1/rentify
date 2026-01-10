@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\MessageController;
 
 
 // Routes publiques (sans authentification)
@@ -43,5 +44,11 @@ Route::middleware('auth:api')->group(function () {
     Route::post('notifications/{id}/mark-read', [NotificationController::class, 'markAsRead']);
     Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllAsRead']);
     Route::delete('notifications/{id}', [NotificationController::class, 'destroy']);
+    Route::get('conversations', [MessageController::class, 'conversations']);
+    Route::get('messages/{userId}', [MessageController::class, 'messages']);
+    Route::post('messages/send', [MessageController::class, 'send']);
+    Route::get('messages-unread-count', [MessageController::class, 'unreadCount']);
+    Route::post('messages/{id}/mark-read', [MessageController::class, 'markAsRead']);
+    Route::delete('messages/{id}', [MessageController::class, 'destroy']);
     
 });
