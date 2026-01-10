@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\TenantController;
 use App\Http\Controllers\Api\ContractController;
+use App\Http\Controllers\Api\PaymentController;
 
 
 // Routes publiques (sans authentification)
@@ -25,5 +26,8 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('tenants', TenantController::class);
     Route::apiResource('contracts', ContractController::class);
     Route::post('contracts/{id}/renew', [ContractController::class, 'renew']);
+    Route::apiResource('payments', PaymentController::class);
+    Route::post('payments/{id}/mark-paid', [PaymentController::class, 'markAsPaid']);
+    Route::get('payments-stats', [PaymentController::class, 'stats']);
     
 });
