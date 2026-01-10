@@ -206,7 +206,7 @@ class ReportController extends Controller
     public function expiringContractsReport(Request $request)
     {
         $userId = auth()->id();
-        $days = $request->get('days', 30); // Par défaut 30 jours
+        $days = (int) $request->get('days', 30); // Par défaut 30 jours
 
         $expiringContracts = Contract::with(['property', 'tenant'])
             ->whereHas('property', function ($q) use ($userId) {
@@ -255,8 +255,8 @@ class ReportController extends Controller
     public function financialReport(Request $request)
     {
         $userId = auth()->id();
-        $year = $request->get('year', date('Y'));
-        $month = $request->get('month');
+        $year = (int) $request->get('year', date('Y'));
+        $month = $request->has('month') ? (int) $request->get('month') : null;
 
         $query = Payment::whereHas('contract.property', function ($q) use ($userId) {
             $q->where('user_id', $userId);
